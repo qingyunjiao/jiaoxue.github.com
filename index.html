@@ -68,7 +68,9 @@
     <h2>请关注一下我的<a href="https://blog.csdn.net/atgfg">博客CSDN</a>，这个更新最早。或&nbsp;关注一下我的<a href="https://github.com/qingyunjiao/qingyunjiao.github.io">GitHub</a>，谢谢支持！</h2>
     <p class="red">我是<strong>北大青鸟的一名认证老师</strong>，<strong>主讲JAVA7.0</strong>，有想<strong>系统学习JAVA或C#编程</strong>的朋友，请速与我联系，近期开班，<strong>说重点：介绍或找我报名的前十名同学还有奖励</strong>，请大家抓紧时间。</p>
     <p class="red">教学模式为：<strong>线上</strong>(在线视频：PC+ANDROID+IOS都可以在线看)+<strong>线下</strong>(面授：来学校上课)+<strong>实训</strong>(就业指导)+<strong>推荐工作</strong></p>
-    <p> <strong>本页面的地址为：<a href="http://www.gyun.org">http://www.gyun.org</a></strong>&nbsp;<a href="#" onclick="window.external.AddFavorite(document.URL,document.title);">加入收藏</a>  |  <a href="#" onclick="this.style.behavior='url(#default#homepage)';this.setHomePage(document.URL);">设为首页</a></p>
+    <p> <strong>本页面的地址为：<a href="http://www.gyun.org">http://www.gyun.org</a></strong>&nbsp;<a onclick="Favorites()">加入收藏夹</a>  |  <a onclick="HomePage(this)">设为首页</a>
+
+    </p>
     <h2>(持续更新)</h2>　
 </div>
 </body>
@@ -91,5 +93,47 @@
             $(this).css('background', color);
         });
     });
+    function HomePage(obj){
+        var url = window.location.href;
+
+        try{
+
+            //设置为“IE”浏览器的主页　　　　
+            obj.style.behavior = 'url(#default#homepage)';
+            obj.setHomePage(url);
+        }
+        catch(e){
+
+            //设置为“火狐”浏览器的主页　　　　　　　　
+            if(window.netscape){
+                try{
+                    netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+                }
+                catch (e){
+                    alert("浏览器拒绝把当前网站设为主页！需要继续操作，请在浏览器地址栏输入“about:config”并回车，然后双击[signed.applets.codebase_principal_support] 将它的值设置为'true'即可。");
+                }
+
+                var pre = Components.classes['@mozilla.org/preferences-service;1'].getService
+
+                (Components.interfaces.nsIPrefBranch);
+                pre.setCharPref('browser.startup.homepage',url);
+            }
+        }
+    }
+    function Favorites(){
+        var url = window.location.href;
+
+        try{
+            window.external.addFavorite(url, "教学案例，免费学习");
+        }
+        catch (e){
+            try{
+                window.sidebar.addPanel("教学案例，免费学习", url, "");
+            }
+            catch (e){
+                alert("加入收藏夹失败，请按 Ctrl + D 添加！");
+            }
+        }
+    }
 </script>
 </html>
